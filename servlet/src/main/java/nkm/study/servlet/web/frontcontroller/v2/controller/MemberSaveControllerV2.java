@@ -1,4 +1,4 @@
-package nkm.study.servlet.web.frontcontroller.v1.controller;
+package nkm.study.servlet.web.frontcontroller.v2.controller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -6,15 +6,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import nkm.study.servlet.domain.member.Member;
 import nkm.study.servlet.domain.member.MemberRepository;
-import nkm.study.servlet.web.frontcontroller.v1.ControllerV1;
+import nkm.study.servlet.web.frontcontroller.MyView;
+import nkm.study.servlet.web.frontcontroller.v2.ControllerV2;
 
 import java.io.IOException;
 
-public class MemberSaveControllerV1 implements ControllerV1 {
-    private MemberRepository memberRepository = MemberRepository.getInstance();
+public class MemberSaveControllerV2 implements ControllerV2 {
+    private final MemberRepository memberRepository = MemberRepository.getInstance();
 
     @Override
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public MyView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         int age = Integer.parseInt(request.getParameter("age"));
 
@@ -23,8 +24,6 @@ public class MemberSaveControllerV1 implements ControllerV1 {
 
         request.setAttribute("member",member);
 
-        String viewPath = "/WEB-INF/views/save-result.jsp";
-        RequestDispatcher rd = request.getRequestDispatcher(viewPath);
-        rd.forward(request,response);
+        return new MyView("/WEB-INF/views/result.jsp");
     }
 }
