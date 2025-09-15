@@ -13,7 +13,8 @@ import nkm.study.servlet.web.frontcontroller.v3.controller.MemberSaveControllerV
 import nkm.study.servlet.web.frontcontroller.v4.controller.MemberFormControllerV4;
 import nkm.study.servlet.web.frontcontroller.v4.controller.MemberListControllerV4;
 import nkm.study.servlet.web.frontcontroller.v4.controller.MemberSaveControllerV4;
-import nkm.study.servlet.web.frontcontroller.v5.adapter.ControllerV3HandlerAdpater;
+import nkm.study.servlet.web.frontcontroller.v5.adapter.ControllerV3HandlerAdapter;
+import nkm.study.servlet.web.frontcontroller.v5.adapter.ControllerV4HandlerAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,8 +44,8 @@ public class FrontControllerServletV5 extends HttpServlet {
     }
 
     private void initHandlerAdapters() {
-        handlerAdapters.add(new ControllerV3HandlerAdpater());
-        handlerAdapters.add(new ControllerV4HandlerAdpater());
+        handlerAdapters.add(new ControllerV3HandlerAdapter());
+        handlerAdapters.add(new ControllerV4HandlerAdapter());
     }
 
     @Override

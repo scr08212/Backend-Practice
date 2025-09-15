@@ -5,14 +5,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import nkm.study.servlet.web.frontcontroller.ModelView;
 import nkm.study.servlet.web.frontcontroller.v3.ControllerV3;
-import nkm.study.servlet.web.frontcontroller.v4.ControllerV4;
 import nkm.study.servlet.web.frontcontroller.v5.MyHandlerAdapter;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ControllerV3HandlerAdpater implements MyHandlerAdapter {
+public class ControllerV3HandlerAdapter implements MyHandlerAdapter {
     @Override
     public boolean support(Object handler) {
         return (handler instanceof ControllerV3);
