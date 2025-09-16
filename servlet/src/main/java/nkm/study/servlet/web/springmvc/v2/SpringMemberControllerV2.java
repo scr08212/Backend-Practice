@@ -6,7 +6,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import nkm.study.servlet.domain.member.Member;
 import nkm.study.servlet.domain.member.MemberRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -17,12 +20,14 @@ public class SpringMemberControllerV2 {
 
     private MemberRepository memberRepository = MemberRepository.getInstance();
 
-    @RequestMapping("/new-form")
+//    @RequestMapping(value = "/new-form", method= RequestMethod.GET)
+    @GetMapping("/new-form")
     public ModelAndView newForm(){
         return new  ModelAndView("new-form");
     }
 
-    @RequestMapping("")
+//    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("")
     public ModelAndView members() {
         List<Member> members = memberRepository.findAll();
         ModelAndView mv = new ModelAndView("members");
@@ -30,7 +35,8 @@ public class SpringMemberControllerV2 {
         return mv;
     }
 
-    @RequestMapping("/save")
+//    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @PostMapping("/save")
     public ModelAndView save(HttpServletRequest request, HttpServletResponse response) {
         String username =  request.getParameter("username");
         int age = Integer.parseInt(request.getParameter("age"));
