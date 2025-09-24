@@ -7,6 +7,7 @@ import nkm.study.itemservice.domain.item.ItemRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -18,6 +19,12 @@ public class BasicItemController {
 
     private final ItemRepository itemRepository;
 
+    @PostConstruct
+    public void init() {
+        itemRepository.save(new Item("a", 100, 10));
+        itemRepository.save(new Item("b", 200, 50));
+    }
+
     @GetMapping
     public String items(Model model) {
         List<Item> items = itemRepository.findAll();
@@ -25,10 +32,11 @@ public class BasicItemController {
         return "basic/items";
     }
 
-    @PostConstruct
-    public void init() {
-        itemRepository.save(new Item("a", 100, 10));
-        itemRepository.save(new Item("b", 200, 50));
+    @GetMapping("/{itemId}")
+    public String item(Model model, @PathVariable("itemId") Long itemId) {
+        Item item = itemRepository.findById(itemId);
+        model.addAttribute("item", item);
+        return "basic/item";
     }
 
 }
