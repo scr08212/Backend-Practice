@@ -1,6 +1,7 @@
 package nkm.study.jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@Getter
 public class Order {
     @Id
     @Column(name = "order_id")
@@ -43,6 +45,19 @@ public class Order {
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
+    }
+
+    public static Order create(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for(OrderItem orderItem : orderItems)
+            order.addOrderItem(orderItem);
+
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+
+        return order;
     }
 
     public void setStatus(OrderStatus status) {

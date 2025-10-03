@@ -29,17 +29,4 @@ public class ItemService {
         return itemRepository.findOne(id);
     }
 
-    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
-        Order order = new Order();
-        order.setMember(member);
-        order.setDelivery(delivery);
-        for(OrderItem orderItem : orderItems)
-            order.addOrderItem(orderItem);
-
-        order.setStatus(OrderStatus.ORDER);
-        order.setOrderDate(LocalDateTime.now());
-
-        return order;
-    }
-
 }
