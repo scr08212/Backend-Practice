@@ -17,7 +17,7 @@ public abstract class Item {
     @Id
     @GeneratedValue
     @Column(name = "item_id")
-    private String id;
+    private Long id;
 
     private String name;
 
@@ -34,7 +34,7 @@ public abstract class Item {
 
     public void removeStock(int quantity) {
         int restStock = this.stockQuantity - quantity;
-        if(this.stockQuantity <= 0) {
+        if(restStock <= 0) {
             throw new NotEnoughStockException("need more stock");
         }
         this.stockQuantity = restStock;
