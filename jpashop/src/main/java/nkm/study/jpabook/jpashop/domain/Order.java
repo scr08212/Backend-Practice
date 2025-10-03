@@ -2,6 +2,7 @@ package nkm.study.jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,5 +43,30 @@ public class Order {
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public void cancel(){
+        if(delivery.getStatus() == DeliveryStatus.COMP) {
+            throw new IllegalStateException("이미 배송 완료된 상품은 취소할 수 없음");
+        }
+
+        this.setStatus(OrderStatus.CANCEL);
+        for(OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
+    public int getTotalPrice(){
+        return orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();
     }
 }
