@@ -2,11 +2,14 @@ package nkm.study.jpabook.jpashop.controller;
 
 import lombok.RequiredArgsConstructor;
 import nkm.study.jpabook.jpashop.domain.item.Book;
+import nkm.study.jpabook.jpashop.domain.item.Item;
 import nkm.study.jpabook.jpashop.service.ItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,5 +33,12 @@ public class ItemController {
         book.setIsbn(form.getIsbn());
         itemService.save(book);
         return "redirect:/items";
+    }
+
+    @GetMapping("/items")
+    public String list(Model model) {
+        List<Item> items = itemService.findAll();
+        model.addAttribute("items", items);
+        return "items/itemList";
     }
 }
