@@ -2,16 +2,15 @@ package nkm.study.jpabook.jpashop.controller;
 
 import lombok.RequiredArgsConstructor;
 import nkm.study.jpabook.jpashop.domain.Member;
+import nkm.study.jpabook.jpashop.domain.Order;
 import nkm.study.jpabook.jpashop.domain.item.Item;
+import nkm.study.jpabook.jpashop.repository.OrderSearch;
 import nkm.study.jpabook.jpashop.service.ItemService;
 import nkm.study.jpabook.jpashop.service.MemberService;
 import nkm.study.jpabook.jpashop.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,6 +38,20 @@ public class OrderController {
                         @RequestParam("itemId") Long itemId,
                         @RequestParam("count") int count) {
         orderService.order(memberId, itemId, count);
+        return "redirect:/orders";
+    }
+
+    @GetMapping("/orders")
+    public String orderList(@ModelAttribute("orderSearch") OrderSearch search, Model model) {
+        List<Order> orders = orderService.findOrders(search);
+        model.addAttribute("orders", orders);
+
+        return "order/orderList";
+    }
+
+    @PostMapping("/orders/{orderId}/cancel")
+    public String cancelOrder(@RequestParam("orderId") Long orderId) {
+        orderService.cancelOrder(orderId);
         return "redirect:/orders";
     }
 }

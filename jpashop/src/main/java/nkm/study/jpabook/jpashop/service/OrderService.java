@@ -9,6 +9,7 @@ import nkm.study.jpabook.jpashop.domain.item.Item;
 import nkm.study.jpabook.jpashop.repository.ItemRepository;
 import nkm.study.jpabook.jpashop.repository.MemberRepository;
 import nkm.study.jpabook.jpashop.repository.OrderRepository;
+import nkm.study.jpabook.jpashop.repository.OrderSearch;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +49,7 @@ public class OrderService {
         order.cancel();
     }
 
-//    public List<Order> findOrders(Long orderId){
-//        return orderRepository.findAll(orderSearch);
-//    }
+    public List<Order> findOrders(OrderSearch search){
+        return orderRepository.findAll(search);
+    }
 }
